@@ -37,6 +37,15 @@
             lblDatabaseName = new Label();
             txtDatabaseName = new TextBox();
             btnSelectDB = new Button();
+            lblAuthenticationType = new Label();
+            cmbAuthenticationType = new ComboBox();
+            lblUserName = new Label();
+            txtUserName = new TextBox();
+            lblPassword = new Label();
+            txtPassword = new TextBox();
+            btnTestConnection = new Button();
+            btnTestConnectionAndSave = new Button();
+            btnSaveConnection = new Button();
             SuspendLayout();
             // 
             // lblConnectionName
@@ -114,11 +123,98 @@
             btnSelectDB.Text = "btnSelectDB";
             btnSelectDB.UseVisualStyleBackColor = true;
             // 
+            // lblAuthenticationType
+            // 
+            lblAuthenticationType.AutoSize = true;
+            lblAuthenticationType.Location = new Point(66, 393);
+            lblAuthenticationType.Name = "lblAuthenticationType";
+            lblAuthenticationType.Size = new Size(154, 20);
+            lblAuthenticationType.TabIndex = 9;
+            lblAuthenticationType.Text = "lblAuthenticationType";
+            // 
+            // cmbAuthenticationType
+            // 
+            cmbAuthenticationType.FormattingEnabled = true;
+            cmbAuthenticationType.Items.AddRange(new object[] { "Windows Authentication", "SQL Server Authentication" });
+            cmbAuthenticationType.Location = new Point(254, 390);
+            cmbAuthenticationType.Name = "cmbAuthenticationType";
+            cmbAuthenticationType.Size = new Size(470, 28);
+            cmbAuthenticationType.TabIndex = 10;
+            // 
+            // lblUserName
+            // 
+            lblUserName.AutoSize = true;
+            lblUserName.Location = new Point(66, 456);
+            lblUserName.Name = "lblUserName";
+            lblUserName.Size = new Size(95, 20);
+            lblUserName.TabIndex = 11;
+            lblUserName.Text = "lblUserName";
+            // 
+            // txtUserName
+            // 
+            txtUserName.Location = new Point(254, 453);
+            txtUserName.Name = "txtUserName";
+            txtUserName.Size = new Size(470, 27);
+            txtUserName.TabIndex = 12;
+            // 
+            // lblPassword
+            // 
+            lblPassword.AutoSize = true;
+            lblPassword.Location = new Point(66, 516);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(87, 20);
+            lblPassword.TabIndex = 13;
+            lblPassword.Text = "lblPassword";
+            // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(254, 513);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Size = new Size(470, 27);
+            txtPassword.TabIndex = 14;
+            // 
+            // btnTestConnection
+            // 
+            btnTestConnection.Location = new Point(75, 589);
+            btnTestConnection.Name = "btnTestConnection";
+            btnTestConnection.Size = new Size(166, 29);
+            btnTestConnection.TabIndex = 15;
+            btnTestConnection.Text = "btnTestConnection";
+            btnTestConnection.UseVisualStyleBackColor = true;
+            btnTestConnection.Click += btnTestConnection_Click;
+            // 
+            // btnTestConnectionAndSave
+            // 
+            btnTestConnectionAndSave.Location = new Point(297, 589);
+            btnTestConnectionAndSave.Name = "btnTestConnectionAndSave";
+            btnTestConnectionAndSave.Size = new Size(228, 29);
+            btnTestConnectionAndSave.TabIndex = 16;
+            btnTestConnectionAndSave.Text = "btnTestConnectionAndSave";
+            btnTestConnectionAndSave.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveConnection
+            // 
+            btnSaveConnection.Location = new Point(590, 589);
+            btnSaveConnection.Name = "btnSaveConnection";
+            btnSaveConnection.Size = new Size(202, 29);
+            btnSaveConnection.TabIndex = 17;
+            btnSaveConnection.Text = "btnSaveConnection";
+            btnSaveConnection.UseVisualStyleBackColor = true;
+            // 
             // Connections
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(897, 561);
+            ClientSize = new Size(898, 660);
+            Controls.Add(btnSaveConnection);
+            Controls.Add(btnTestConnectionAndSave);
+            Controls.Add(btnTestConnection);
+            Controls.Add(txtPassword);
+            Controls.Add(lblPassword);
+            Controls.Add(txtUserName);
+            Controls.Add(lblUserName);
+            Controls.Add(cmbAuthenticationType);
+            Controls.Add(lblAuthenticationType);
             Controls.Add(btnSelectDB);
             Controls.Add(txtDatabaseName);
             Controls.Add(lblDatabaseName);
@@ -145,5 +241,14 @@
         private Label lblDatabaseName;
         private TextBox txtDatabaseName;
         private Button btnSelectDB;
+        private Label lblAuthenticationType;
+        private ComboBox cmbAuthenticationType;
+        private Label lblUserName;
+        private TextBox txtUserName;
+        private Label lblPassword;
+        private TextBox txtPassword;
+        private Button btnTestConnection;
+        private Button btnTestConnectionAndSave;
+        private Button btnSaveConnection;
     }
 }
