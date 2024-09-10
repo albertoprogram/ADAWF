@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADAWF.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,19 +14,29 @@ namespace ADAWF.Forms
 {
     public partial class Connections : Form
     {
+
+        #region Constructors
         public Connections()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region btnTestConnection_Click
         private void btnTestConnection_Click(object sender, EventArgs e)
         {
             string connectionString = ConnectionString(txtServerName.Text, txtDatabaseName.Text,
                 cmbAuthenticationType.Text, txtUserName.Text, txtPassword.Text);
 
-            TestSQLServerConnection(connectionString);
+            if (TestSQLServerConnection(connectionString))
+            {
+                MessageBox.Show("OK", GlobalUtilities.systemName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
+        #endregion
 
+        #region ConnectionString
         private string ConnectionString(string serverName, string databaseName,
             string authenticationType, string userName, string password)
         {
@@ -40,13 +51,15 @@ namespace ADAWF.Forms
                     break;
                 case "SQL Server Authentication":
                     connectionString += $"User Id={userName};" +
-                        $"Password={password}";
+                        $"Password={password};";
                     break;
             }
 
             return connectionString;
         }
+        #endregion
 
+        #region TestSQLServerConnection
         private bool TestSQLServerConnection(string connectionString)
         {
             try
@@ -61,17 +74,19 @@ namespace ADAWF.Forms
             catch (SqlException sqlEx)
             {
                 MessageBox.Show("SQL Error:" + sqlEx.Message + "-" + sqlEx.StackTrace,
-                    "System", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("General Error:" + ex.Message + "-" + ex.StackTrace,
-                    "System", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return false;
             }
         }
+        #endregion
+
     }
 }
