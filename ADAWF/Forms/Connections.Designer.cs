@@ -200,6 +200,7 @@
             btnSaveConnection.TabIndex = 17;
             btnSaveConnection.Text = "btnSaveConnection";
             btnSaveConnection.UseVisualStyleBackColor = true;
+            btnSaveConnection.Click += btnSaveConnection_Click;
             // 
             // Connections
             // 

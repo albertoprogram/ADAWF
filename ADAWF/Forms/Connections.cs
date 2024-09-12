@@ -88,5 +88,67 @@ namespace ADAWF.Forms
         }
         #endregion
 
+        #region btnSaveConnection_Click
+        private void btnSaveConnection_Click(object sender, EventArgs e)
+        {
+            InsertConnection();
+        }
+        #endregion
+
+        #region InsertConnection
+        private void InsertConnection()
+        {
+            string connectionString = string.Empty;
+
+            try
+            {
+                connectionString = ConfigurationHelper.GetConnectionString("DefaultConnection");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar obtener cadena de conexión:" + ex.Message + "-" + ex.StackTrace,
+                            GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = @"INSERT INTO Connections 
+                         (ConnectionName, ConnectionDescription, ServerName, DatabaseName, AuthenticationType, UserName, EncryptedPassword) 
+                         VALUES 
+                         (@ConnectionName, @ConnectionDescription, @ServerName, @DatabaseName, @AuthenticationType, @UserName, @EncryptedPassword)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@ConnectionName", SqlDbType.NVarChar, 250).Value = txtConnectionName.Text;
+                    command.Parameters.Add("@ConnectionDescription", SqlDbType.NVarChar, 2000).Value = txtConnectionDescription.Text;
+                    command.Parameters.Add("@ServerName", SqlDbType.NVarChar, 250).Value = txtServerName.Text;
+                    command.Parameters.Add("@DatabaseName", SqlDbType.NVarChar, 250).Value = txtDatabaseName.Text;
+                    command.Parameters.Add("@AuthenticationType", SqlDbType.NVarChar, 50).Value = cmbAuthenticationType.Text;
+                    command.Parameters.Add("@UserName", SqlDbType.NVarChar, 100).Value = txtUserName.Text;
+                    command.Parameters.Add("@EncryptedPassword", SqlDbType.NVarChar, 2000).Value = txtPassword.Text;
+
+                    try
+                    {
+                        connection.Open();
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        MessageBox.Show($"{rowsAffected} registro(s) insertado(s) exitosamente.",
+                            GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        MessageBox.Show("SQL Error:" + sqlEx.Message + "-" + sqlEx.StackTrace,
+                            GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("General Error:" + ex.Message + "-" + ex.StackTrace,
+                            GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }
