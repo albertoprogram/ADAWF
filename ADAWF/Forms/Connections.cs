@@ -1,4 +1,5 @@
 ﻿using ADAWF.Utilities;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -110,6 +111,8 @@ namespace ADAWF.Forms
                             GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            string encryptPassword = EncryptPassword(txtPassword.Text);
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = @"INSERT INTO Connections 
@@ -125,7 +128,7 @@ namespace ADAWF.Forms
                     command.Parameters.Add("@DatabaseName", SqlDbType.NVarChar, 250).Value = txtDatabaseName.Text;
                     command.Parameters.Add("@AuthenticationType", SqlDbType.NVarChar, 50).Value = cmbAuthenticationType.Text;
                     command.Parameters.Add("@UserName", SqlDbType.NVarChar, 100).Value = txtUserName.Text;
-                    command.Parameters.Add("@EncryptedPassword", SqlDbType.NVarChar, 2000).Value = txtPassword.Text;
+                    command.Parameters.Add("@EncryptedPassword", SqlDbType.NVarChar, 2000).Value = encryptPassword;
 
                     try
                     {
@@ -147,6 +150,34 @@ namespace ADAWF.Forms
                             GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+        #endregion
+
+        #region EncryptPassword
+        private string EncryptPassword(string password)
+        {
+            try
+            {
+                var config = new ConfigurationBuilder()
+                    .AddUserSecrets<Connections>()
+                    .Build();
+
+                string key = config["EncryptionKey"];
+                string iv = config["EncryptionIV"];
+
+                AesEncryption aes = new AesEncryption(key, iv);
+
+                string encryptedText = aes.Encrypt(password);
+
+                return encryptedText;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("General Error:" + ex.Message + "-" + ex.StackTrace,
+                            GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return "Error";
             }
         }
         #endregion
