@@ -191,6 +191,7 @@
             btnTestConnectionAndSave.TabIndex = 16;
             btnTestConnectionAndSave.Text = "btnTestConnectionAndSave";
             btnTestConnectionAndSave.UseVisualStyleBackColor = true;
+            btnTestConnectionAndSave.Click += btnTestConnectionAndSave_Click;
             // 
             // btnSaveConnection
             // 

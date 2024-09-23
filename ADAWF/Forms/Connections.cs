@@ -107,8 +107,9 @@ namespace ADAWF.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al intentar obtener cadena de conexión:" + ex.Message + "-" + ex.StackTrace,
-                            GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al intentar obtener cadena de conexión de {GlobalUtilities.systemName}" +
+                    ex.Message + "-" + ex.StackTrace,
+                    GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             string encryptPassword = EncryptPassword(txtPassword.Text);
@@ -178,6 +179,43 @@ namespace ADAWF.Forms
                             GlobalUtilities.systemName, MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 return "Error";
+            }
+        }
+        #endregion
+
+        #region btnTestConnectionAndSave_Click
+        private void btnTestConnectionAndSave_Click(object sender, EventArgs e)
+        {
+            string connectionString = ConnectionString(txtServerName.Text, txtDatabaseName.Text,
+                cmbAuthenticationType.Text, txtUserName.Text, txtPassword.Text);
+
+            if (TestSQLServerConnection(connectionString))
+            {
+                MessageBox.Show("Se logró la conexión.", GlobalUtilities.systemName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                InsertConnection();
+
+                MessageBox.Show("Operación completada.", GlobalUtilities.systemName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                DialogResult dialogResult =
+                    MessageBox.Show("No se pudo efectuar la conexión. ¿Todavía desea guardar la información de la conexión?",
+                    GlobalUtilities.systemName,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    InsertConnection();
+                }
+                else
+                {
+                    MessageBox.Show("Operación cancelada", GlobalUtilities.systemName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
         #endregion
