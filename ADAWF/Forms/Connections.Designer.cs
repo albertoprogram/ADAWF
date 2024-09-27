@@ -131,6 +131,7 @@
             lblAuthenticationType.Size = new Size(154, 20);
             lblAuthenticationType.TabIndex = 9;
             lblAuthenticationType.Text = "lblAuthenticationType";
+            lblAuthenticationType.Visible = false;
             // 
             // cmbAuthenticationType
             // 
@@ -140,6 +141,7 @@
             cmbAuthenticationType.Name = "cmbAuthenticationType";
             cmbAuthenticationType.Size = new Size(470, 28);
             cmbAuthenticationType.TabIndex = 10;
+            cmbAuthenticationType.Visible = false;
             // 
             // lblUserName
             // 
@@ -228,6 +230,7 @@
             Controls.Add(lblConnectionName);
             Name = "Connections";
             Text = "Connections";
+            Load += Connections_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -219,5 +219,12 @@ namespace ADAWF.Forms
             }
         }
         #endregion
+
+        #region Connections_Load
+        private void Connections_Load(object sender, EventArgs e)
+        {
+            cmbAuthenticationType.Text = "SQL Server Authentication";
+        }
+        #endregion
     }
 }
